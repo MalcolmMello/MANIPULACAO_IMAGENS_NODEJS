@@ -2,20 +2,6 @@ import { Request, Response } from 'express';
 import { Sequelize } from 'sequelize';
 import { Phrase } from '../models/Phrase';
 
-export const ping = (req: Request, res: Response) => {
-    res.json({ pong: true })
-};
-
-export const random = (req: Request, res: Response) => {
-    let nRand: number = Math.floor(Math.random() * 10);
-    res.json({number: nRand});
-};
-
-export const nome = (req: Request, res: Response) => {
-    let nome: string = req.params.nome;
-
-    res.json({nome: `Você enviou o nome ${nome}`});
-};
 
 export const createPhrase = async (req: Request, res: Response) => {
     let { author, txt } = req.body;
@@ -50,8 +36,8 @@ export const updatePhrase = async (req: Request, res: Response) => {
 
         res.json({ phrase });
     } else {
-        res.json({ error: 'Frase não encontrada' })
-    }
+        res.json({ error: 'Frase não encontrada' });
+    };
 };
 
 export const deletePhrase = async (req: Request, res: Response) => {
@@ -65,8 +51,8 @@ export const randomPhrase = async (req: Request, res: Response) => {
         order: [
             Sequelize.fn('RANDOM')
         ]
-    })
+    });
 
     if(phrase) res.json({ phrase });
-    else res.json({ error: 'Não há frases cadastradas' })
+    else res.json({ error: 'Não há frases cadastradas' });
 };
