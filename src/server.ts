@@ -1,8 +1,8 @@
-import express, { Request, Response } from 'express'
-import path from 'path'
-import dotenv from 'dotenv'
-import cors from 'cors'
-import apiRoutes from './routes/api'
+import express, { Request, Response } from 'express';
+import path from 'path';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import apiRoutes from './routes/api';
 
 dotenv.config();
 
