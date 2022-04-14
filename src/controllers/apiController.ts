@@ -3,6 +3,7 @@ import { Sequelize } from 'sequelize';
 import { Phrase } from '../models/Phrase';
 
 
+
 export const createPhrase = async (req: Request, res: Response) => {
     let { author, txt } = req.body;
     let newPhrase = await Phrase.create({ author, txt });
@@ -55,4 +56,18 @@ export const randomPhrase = async (req: Request, res: Response) => {
 
     if(phrase) res.json({ phrase });
     else res.json({ error: 'Não há frases cadastradas' });
+};
+
+export const uploadFile = (req: Request, res: Response) => {
+    type UploadTypes = {
+        avatar: Express.Multer.File[],
+        gallery: Express.Multer.File[]
+    }
+    
+    const files = req.files as UploadTypes;
+    
+    console.log("AVATAR", files.avatar);
+	console.log("GALLERY", files.gallery);
+
+    res.json({});
 };
