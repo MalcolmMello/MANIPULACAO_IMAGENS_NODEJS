@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { Sequelize } from 'sequelize';
+import sharp from 'sharp';
 import { Phrase } from '../models/Phrase';
 
 
@@ -58,16 +59,16 @@ export const randomPhrase = async (req: Request, res: Response) => {
     else res.json({ error: 'Não há frases cadastradas' });
 };
 
-export const uploadFile = (req: Request, res: Response) => {
-    type UploadTypes = {
-        avatar: Express.Multer.File[],
-        gallery: Express.Multer.File[]
+export const uploadFile = async (req: Request, res: Response) => {
+    if(req.file) {
+        await sharp(req.file.path)
+        .resize(500)
+        .toFormat('jpeg')
+        .toFile(`./public/media/${req.file.filename}.jpg`)
+        
+        res.json({ image: `${req.file.filename}.jpg` });
+    } else {
+        res.status(400);
+        res.json({ error: 'Envie um arquivo válido' })
     }
-    
-    const files = req.files as UploadTypes;
-    
-    console.log("AVATAR", files.avatar);
-	console.log("GALLERY", files.gallery);
-
-    res.json({});
 };
